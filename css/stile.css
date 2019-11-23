@@ -1,0 +1,12 @@
+.quadrato {
+    height: 140px;
+    width: 140px;
+    margin-top: 5px;
+    margin-right: 5px;
+    border-color: black;
+}
+
+.resetta {
+    margin-top: 5px;
+    border-color: black;
+}

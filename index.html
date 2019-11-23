@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Scegli la tua Pizza</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/stile.css">
+</head>
+
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-4">
+                <h3>Scegli ingredienti</h3>
+                <div id="ingredienti"></div>
+            </div>
+            <div class="col-sm-2">
+                <h3>Scelti</h3>
+                <div id="scelti"></div>
+                <button type="button" class="btn btn-light btn-sm rounded-0 btn-block resetta"
+                    onclick="resetta()">Resetta</button>
+            </div>
+            <div class="col-sm-6">
+                <h3>Pizze proposte</h3>
+                <div id="pizze"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+
+    <script>
+        var output = [];
+        var scelti = [];
+
+        let listaIngredienti = [
+            { text: "Acciughe" },
+            { text: "Aglio" },
+            { text: "Ananas" },
+            { text: "Aneto" },
+            { text: "Basilico" },
+            { text: "Bresaola" },
+            { text: "Brie" },
+            { text: "Caciotta" },
+            { text: "Capperi" },
+            { text: "Carciofini" },
+            { text: "Cipolle" },
+            { text: "Fagioli" },
+            { text: "Fiori di zucca" },
+            { text: "Friarielli" },
+            { text: "Frutti di mare" },
+            { text: "Funghi" },
+            { text: "Funghi porcini" },
+            { text: "Gamberetti" },
+            { text: "Gorgonzola" },
+            { text: "Grana Padano" },
+            { text: "Lardo" },
+            { text: "Mais" },
+            { text: "Melanzane" },
+            { text: "Mozzarella" },
+            { text: "Mozzarella bufala" },
+            { text: "Nduja" },
+            { text: "Noci" },
+            { text: "Olive nere" },
+            { text: "Olive verdi" },
+            { text: "Origano" },
+            { text: "Pancetta" },
+            { text: "Panna" },
+            { text: "Parmigiano" },
+            { text: "Patate" },
+            { text: "Patatine fritte" },
+            { text: "Pecorino" },
+            { text: "Peperoni" },
+            { text: "Pere" },
+            { text: "Pesto" },
+            { text: "Pinoli" },
+            { text: "Piselli" },
+            { text: "Pistacchio" },
+            { text: "Pomodori secchi" },
+            { text: "Pomodoro" },
+            { text: "Pomodoro datterino" },
+            { text: "Pomodoro fresco" },
+            { text: "Prezzemolo" },
+            { text: "Prosciutto cotto" },
+            { text: "Prosciutto crudo" },
+            { text: "Provola" },
+            { text: "Radicchio" },
+            { text: "Ricotta" },
+            { text: "Rosmarino" },
+            { text: "Rucola" },
+            { text: "Salame" },
+            { text: "Salame piccante" },
+            { text: "Salmone" },
+            { text: "Salsiccia" },
+            { text: "Speck" },
+            { text: "Spinaci" },
+            { text: "Stracchino" },
+            { text: "Tonno" },
+            { text: "Uovo" },
+            { text: "Wurstel" },
+        ];
+
+        // { text: '' },
+
+        let listaPizze = [
+            { nomepizza: 'Marinara', ingredienti: ['Pomodoro', 'Origano', 'Aglio'] },
+            { nomepizza: 'Margherita', ingredienti: ['Pomodoro', 'Mozzarella', 'Basilico'] },
+            { nomepizza: 'Greca', ingredienti: ['Pomodoro', 'Mozzarella', 'Olive nere'] },
+            { nomepizza: 'Rosmarino', ingredienti: ['Pomodoro', 'Mozzarella', 'Rosmarino'] },
+            { nomepizza: 'Basilico', ingredienti: ['Pomodoro', 'Mozzarella', 'Basilico'] },
+            { nomepizza: 'Aglio', ingredienti: ['Pomodoro', 'Mozzarella', 'Aglio'] },
+            { nomepizza: 'Capperi', ingredienti: ['Pomodoro', 'Mozzarella', 'Capperi'] },
+            { nomepizza: 'Napoletana', ingredienti: ['Pomodoro', 'Mozzarella', 'Capperi', 'Acciughe'] },
+            { nomepizza: 'Romana', ingredienti: ['Pomodoro', 'Mozzarella', 'Origano', 'Acciughe'] },
+            { nomepizza: 'Bismarck', ingredienti: ['Pomodoro', 'Mozzarella', 'Uovo', 'Prosciutto cotto'] },
+            { nomepizza: 'Bianca', ingredienti: ['Rosmarino'] },
+            { nomepizza: 'Diavola', ingredienti: ['Pomodoro', 'Mozzarella', 'Salame piccante'] },
+            { nomepizza: 'Boscaiola', ingredienti: ['Pomodoro', 'Mozzarella', 'Salsiccia', 'Funghi'] },
+            { nomepizza: 'Quattro formaggi', ingredienti: ['Mozzarella', 'Parmigiano', 'Gorgonzola', 'Provola'] },
+            { nomepizza: 'Quattro stagioni', ingredienti: ['Pomodoro', 'Mozzarella', 'Carciofini', 'Prosciutto cotto', 'Funghi', 'Olive verdi', 'Olive nere'] },
+            { nomepizza: 'Capricciosa', ingredienti: ['Pomodoro', 'Mozzarella', 'Carciofini', 'Prosciutto cotto', 'Funghi', 'Olive nere'] },
+            { nomepizza: 'Salsiccia', ingredienti: ['Pomodoro', 'Mozzarella', 'Salsiccia'] },
+            { nomepizza: 'Salsiccia e patate', ingredienti: ['Mozzarella', 'Salsiccia', 'Patate'] },
+            { nomepizza: 'Frutti di mare', ingredienti: ['Pomodoro', 'Mozzarella', 'Frutti di mare'] },
+            { nomepizza: 'Mari e monti', ingredienti: ['Pomodoro', 'Mozzarella', 'Prosciutto cotto', 'Funghi', 'Frutti di mare'] },
+            { nomepizza: 'Ortolana', ingredienti: ['Pomodoro', 'Mozzarella', 'Melanzane', 'Zucchine', 'Peperoni'] },
+            { nomepizza: 'Calabrese', ingredienti: ['Pomodoro', 'Mozzarella', 'Cipolla', 'Nduja'] },
+            { nomepizza: 'Wurstel', ingredienti: ['Pomodoro', 'Mozzarella', 'Wurstel'] },
+            { nomepizza: 'Tirolese', ingredienti: ['Pomodoro', 'Mozzarella', 'Radicchio', 'Speck'] },
+            { nomepizza: 'Salmone', ingredienti: ['Mozzarella', 'Salmone', 'Aneto'] },
+            { nomepizza: 'Gamberetti e zucchine', ingredienti: ['Mozzarella', 'Gamberetti', 'Zucchine'] },
+            { nomepizza: 'Mediterranea', ingredienti: ['Pomodoro', 'Pomodoro fresco', 'Melanzane', 'Zucchine', 'Basilico', 'Capperi'] },
+            { nomepizza: 'Tonno e cipolle', ingredienti: ['Pomodoro', 'Tonno', 'Cipolle'] },
+            { nomepizza: 'Rossa', ingredienti: ['Pomodoro'] },
+            { nomepizza: 'Funghi', ingredienti: ['Pomodoro', 'Mozzarella', 'Funghi'] },
+            { nomepizza: 'Pugliese', ingredienti: ['Pomodoro', 'Mozzarella', 'Cipolle'] },
+            { nomepizza: 'Patapizza', ingredienti: ['Pomodoro', 'Mozzarella', 'Patatine fritte'] },
+            { nomepizza: 'Siciliana', ingredienti: ['Pomodoro', 'Acciughe', 'Olive verdi', 'Origano'] },
+            { nomepizza: 'Regina', ingredienti: ['Pomodoro', 'Mozzarella', 'Prosciutto cotto', 'Funghi'] },
+            { nomepizza: 'Zola', ingredienti: ['Pomodoro', 'Mozzarella', 'Gorgonzola'] },
+            { nomepizza: 'Bufala', ingredienti: ['Pomodoro', 'Mozzarella bufala', 'Basilico'] },
+            { nomepizza: 'Americana', ingredienti: ['Pomodoro', 'Mozzarella', 'Wurstel', 'Patatine fritte'] },
+            { nomepizza: 'Crudo', ingredienti: ['Pomodoro', 'Mozzarella', 'Prosciutto crudo'] },
+            { nomepizza: 'Tedesca', ingredienti: ['Pomodoro', 'Mozzarella', 'Salsiccia', 'Patatine fritte'] },
+            { nomepizza: 'Valtellina', ingredienti: ['Pomodoro', 'Mozzarella', 'Bresaola', 'Rucola', 'Grana Padano'] },
+            { nomepizza: 'Carbonara', ingredienti: ['Pomodoro', 'Mozzarella', 'Pancetta', 'Uovo', 'Grana Padano'] },
+            { nomepizza: 'Vulcano', ingredienti: ['Pomodoro', 'Mozzarella', 'Salsiccia', 'Salame piccante', 'Peperoni'] },
+            { nomepizza: 'Saporita', ingredienti: ['Pistacchio', 'Mozzarella', 'Salsiccia', 'Parmigiano'] },
+            { nomepizza: 'Verace', ingredienti: ['Pomodoro datterino', 'Mozzarella bufala', 'Pecorino', 'Parmigiano', 'Basilico'] },
+            { nomepizza: 'Regina', ingredienti: ['Pomodoro', 'Mozzarella bufala', 'Parmigiano', 'Basilico'] },
+            { nomepizza: 'Profumata', ingredienti: ['Pomodoro datterino', 'Mozzarella bufala', 'Rucola', 'Parmigiano', 'Basilico'] },
+            { nomepizza: 'Fior di zucca', ingredienti: ['Ricotta', 'Provola', 'Salame', 'Fiori di zucca', 'Parmigiano', 'Basilico'] },
+            { nomepizza: 'Pesto', ingredienti: ['Pesto', 'Provola', 'Salsiccia', 'Parmigiano', 'Basilico'] },
+            { nomepizza: 'Lardiata', ingredienti: ['Pomodoro datterino', 'Provola', 'Lardo', 'Parmigiano', 'Basilico'] },
+            { nomepizza: 'Porcini', ingredienti: ['Funghi porcini', 'Provola', 'Salsiccia', 'Parmigiano', 'Basilico'] },
+            { nomepizza: 'Noci', ingredienti: ['Noci', 'Provola', 'Salsiccia', 'Parmigiano'] },
+            { nomepizza: 'Caprese', ingredienti: ['Pomodoro datterino', 'Mozzarella', 'Parmigiano', 'Basilico'] },
+            { nomepizza: 'Cafona', ingredienti: ['Panna', 'Prosciutto cotto', 'Mozzarella', 'Crocché', 'Parmigiano'] },
+            { nomepizza: 'Monte bianco', ingredienti: ['Mozzarella', 'Prosciutto crudo', 'Parmigiano'] },
+            { nomepizza: 'Rucola', ingredienti: ['Pomodoro', 'Prosciutto crudo', 'Rucola', 'Parmigiano'] },
+            { nomepizza: 'Parmigiana', ingredienti: ['Pomodoro', 'Mozzarella', 'Melanzane', 'Prosciutto crudo', 'Parmigiano'] },
+            { nomepizza: 'Prosciutto e funghi', ingredienti: ['Pomodoro', 'Mozzarella', 'Prosciutto cotto', 'Funghi porcini', 'Parmigiano'] },
+            { nomepizza: 'Salsiccia e friarielli', ingredienti: ['Provola', 'Salsiccia', 'Friarielli', 'Parmigiano'] },
+            { nomepizza: 'Hawai', ingredienti: ['Pomodoro', 'Mozzarella', 'Prosciutto cotto', 'Ananas'] },
+            { nomepizza: 'Speck e brie', ingredienti: ['Pomodoro', 'Mozzarella', 'Brie', 'Speck'] },
+            { nomepizza: 'Pere e brie', ingredienti: ['Pere', 'Brie', 'Mozzarella', 'Parmigiano'] },
+            { nomepizza: 'Mimosa', ingredienti: ['Pomodoro', 'Panna', 'Mais'] },
+            { nomepizza: 'Pecorino e pomodorini', ingredienti: ['Pomodoro datterino', 'Pecorino', 'Mozzarella', 'Basilico'] },
+            { nomepizza: 'Messicana', ingredienti: ['Mozzarella', 'Cipolle', 'Fagioli'] },
+            { nomepizza: 'Salento', ingredienti: ['Pomodoro datterino', 'Caciotta', 'Rucola'] },
+        ]
+
+        // { nomepizza: '', ingredienti: ['Pomodoro', '', ''] },
+        // { nomepizza: '', ingredienti: ['Pomodoro', 'Mozzarella', ''] },
+        // { nomepizza: '', ingredienti: ['', '', ''] },
+
+        function ordinaIngredienti(a, b) {
+            if (a.text < b.text)
+                return -1;
+            if (a.text > b.text)
+                return 1;
+            return 0;
+        }
+
+        function ordinaPizze(a, b) {
+            if (a.nomepizza < b.nomepizza)
+                return -1;
+            if (a.nomepizza > b.nomepizza)
+                return 1;
+            return 0;
+        }
+
+        function resetta() {
+            scelti = [];
+            aggiorna();
+        }
+
+        function aggiorna(ingrediente) {
+
+            // Controlla se ingrediente è assente da scelti e poi aggiungi
+            if (ingrediente != null) {
+                scelti.push(ingrediente);
+            }
+
+            let listascelti = [];
+            for (var i = 0, f; f = scelti[i]; ++i) {
+                listascelti.push('', f, '<br>');
+            }
+            if (scelti.length != 0) {
+                document.querySelector('#scelti').innerHTML = '<p>' + listascelti.join('') + '</p>';
+            } else {
+                document.querySelector('#scelti').innerHTML = '';
+            }
+
+            seleziona(scelti);
+        }
+
+        function controlla(arr, obj) {
+            return (arr.indexOf(obj) != -1);
+        }
+
+        function seleziona(ingredientiselezionati) {
+            let listapizze = [];
+
+            for (var p = 0, pizza; pizza = listaPizze[p]; ++p) {
+
+                let presente = false;
+                let nonpresente = true;
+                for (var is = 0, ing_s; ing_s = ingredientiselezionati[is]; ++is) {
+
+                    presente = controlla(pizza.ingredienti, ing_s);
+                    if (presente) {
+                        // console.log("  presente ingrediente " + ing_s)
+                    } else {
+                        nonpresente = false;
+                        // console.log("  non presente ingrediente " + ing_s)
+                    }
+                }
+
+                if (presente && nonpresente) {
+                    listapizze.push('' + pizza.nomepizza + ' (' + pizza.ingredienti.join(', ') + ')<br>');
+                }
+                // console.log("---------------------------------------------")
+            }
+
+            document.querySelector('#pizze').innerHTML = '<p>' + listapizze.join('') + '</p>';
+        }
+
+        let listaIngredientiOrdinata = listaIngredienti.sort(ordinaIngredienti);
+        for (var i = 0, f; f = listaIngredientiOrdinata[i]; ++i) {
+            output.push('<button type="button" class="btn btn-light btn-sm rounded-0 quadrato" onclick="aggiorna(\'', f.text, '\')">', f.text, '</button>');
+        }
+        document.querySelector('#ingredienti').innerHTML = '' + output.join('') + '';
+
+        listaPizze = listaPizze.sort(ordinaPizze);
+    </script>
+</body>
+
+</html>
