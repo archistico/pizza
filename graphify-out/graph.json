@@ -1,0 +1,541 @@
+{
+  "directed": false,
+  "multigraph": false,
+  "graph": {},
+  "nodes": [
+    {
+      "label": "Pizza selector HTML page",
+      "file_type": "code",
+      "source_file": "index.html",
+      "source_location": "1-271",
+      "id": "page",
+      "community": 0,
+      "community_name": "Pagina e dipendenze",
+      "norm_label": "pizza selector html page"
+    },
+    {
+      "label": "Bootstrap 4.0.0 CSS CDN",
+      "file_type": "code",
+      "source_file": "index.html",
+      "source_location": "9-10",
+      "id": "bootstrap_css",
+      "community": 0,
+      "community_name": "Pagina e dipendenze",
+      "norm_label": "bootstrap 4.0.0 css cdn"
+    },
+    {
+      "label": "jQuery 3.2.1 slim CDN",
+      "file_type": "code",
+      "source_file": "index.html",
+      "source_location": "34-36",
+      "id": "jquery",
+      "community": 0,
+      "community_name": "Pagina e dipendenze",
+      "norm_label": "jquery 3.2.1 slim cdn"
+    },
+    {
+      "label": "Popper 1.12.9 CDN",
+      "file_type": "code",
+      "source_file": "index.html",
+      "source_location": "37-39",
+      "id": "popper",
+      "community": 0,
+      "community_name": "Pagina e dipendenze",
+      "norm_label": "popper 1.12.9 cdn"
+    },
+    {
+      "label": "Bootstrap 4.0.0 JavaScript CDN",
+      "file_type": "code",
+      "source_file": "index.html",
+      "source_location": "40-42",
+      "id": "bootstrap_js",
+      "community": 0,
+      "community_name": "Pagina e dipendenze",
+      "norm_label": "bootstrap 4.0.0 javascript cdn"
+    },
+    {
+      "label": "Local stylesheet css/stile.css",
+      "file_type": "code",
+      "source_file": "css/stile.css",
+      "source_location": "1-12",
+      "id": "stylesheet",
+      "community": 2,
+      "community_name": "Controlli e stile",
+      "norm_label": "local stylesheet css/stile.css"
+    },
+    {
+      "label": "Ingredient buttons container #ingredienti",
+      "file_type": "code",
+      "source_file": "index.html",
+      "source_location": "17-20",
+      "id": "ingredient_ui",
+      "community": 2,
+      "community_name": "Controlli e stile",
+      "norm_label": "ingredient buttons container #ingredienti"
+    },
+    {
+      "label": "Selected ingredients container #scelti",
+      "file_type": "code",
+      "source_file": "index.html",
+      "source_location": "21-26",
+      "id": "selected_ui",
+      "community": 4,
+      "community_name": "Stato e aggiornamento",
+      "norm_label": "selected ingredients container #scelti"
+    },
+    {
+      "label": "Pizza results container #pizze",
+      "file_type": "code",
+      "source_file": "index.html",
+      "source_location": "27-30",
+      "id": "pizza_ui",
+      "community": 3,
+      "community_name": "Filtro delle pizze",
+      "norm_label": "pizza results container #pizze"
+    },
+    {
+      "label": "Resetta button inline click handler",
+      "file_type": "code",
+      "source_file": "index.html",
+      "source_location": "24-25",
+      "id": "reset_button",
+      "community": 2,
+      "community_name": "Controlli e stile",
+      "norm_label": "resetta button inline click handler"
+    },
+    {
+      "label": "output HTML fragment array",
+      "file_type": "code",
+      "source_file": "index.html",
+      "source_location": "45",
+      "id": "output",
+      "community": 1,
+      "community_name": "Cataloghi e inizializzazione",
+      "norm_label": "output html fragment array"
+    },
+    {
+      "label": "scelti selected ingredient state",
+      "file_type": "code",
+      "source_file": "index.html",
+      "source_location": "46",
+      "id": "selected",
+      "community": 4,
+      "community_name": "Stato e aggiornamento",
+      "norm_label": "scelti selected ingredient state"
+    },
+    {
+      "label": "listaIngredienti ingredient catalog",
+      "file_type": "code",
+      "source_file": "index.html",
+      "source_location": "48-113",
+      "id": "ingredient_catalog",
+      "community": 1,
+      "community_name": "Cataloghi e inizializzazione",
+      "norm_label": "listaingredienti ingredient catalog"
+    },
+    {
+      "label": "listaPizze pizza recipe catalog",
+      "file_type": "code",
+      "source_file": "index.html",
+      "source_location": "117-183",
+      "id": "pizza_catalog",
+      "community": 3,
+      "community_name": "Filtro delle pizze",
+      "norm_label": "listapizze pizza recipe catalog"
+    },
+    {
+      "label": "ordinaIngredienti comparator",
+      "file_type": "code",
+      "source_file": "index.html",
+      "source_location": "189-195",
+      "id": "sort_ingredients",
+      "community": 1,
+      "community_name": "Cataloghi e inizializzazione",
+      "norm_label": "ordinaingredienti comparator"
+    },
+    {
+      "label": "ordinaPizze comparator",
+      "file_type": "code",
+      "source_file": "index.html",
+      "source_location": "197-203",
+      "id": "sort_pizzas",
+      "community": 1,
+      "community_name": "Cataloghi e inizializzazione",
+      "norm_label": "ordinapizze comparator"
+    },
+    {
+      "label": "resetta clears selection",
+      "file_type": "code",
+      "source_file": "index.html",
+      "source_location": "205-208",
+      "id": "reset",
+      "community": 4,
+      "community_name": "Stato e aggiornamento",
+      "norm_label": "resetta clears selection"
+    },
+    {
+      "label": "aggiorna appends selection and refreshes DOM",
+      "file_type": "code",
+      "source_file": "index.html",
+      "source_location": "210-228",
+      "id": "update",
+      "community": 4,
+      "community_name": "Stato e aggiornamento",
+      "norm_label": "aggiorna appends selection and refreshes dom"
+    },
+    {
+      "label": "controlla exact ingredient membership",
+      "file_type": "code",
+      "source_file": "index.html",
+      "source_location": "230-232",
+      "id": "contains",
+      "community": 3,
+      "community_name": "Filtro delle pizze",
+      "norm_label": "controlla exact ingredient membership"
+    },
+    {
+      "label": "seleziona filters recipes requiring all selected ingredients",
+      "file_type": "code",
+      "source_file": "index.html",
+      "source_location": "234-259",
+      "id": "select",
+      "community": 3,
+      "community_name": "Filtro delle pizze",
+      "norm_label": "seleziona filters recipes requiring all selected ingredients"
+    },
+    {
+      "label": "Inline initialization sorts catalogs and renders ingredient buttons",
+      "file_type": "code",
+      "source_file": "index.html",
+      "source_location": "261-267",
+      "id": "init",
+      "community": 1,
+      "community_name": "Cataloghi e inizializzazione",
+      "norm_label": "inline initialization sorts catalogs and renders ingredient buttons"
+    },
+    {
+      "label": ".quadrato fixed 140px ingredient buttons",
+      "file_type": "code",
+      "source_file": "css/stile.css",
+      "source_location": "1-7",
+      "id": "quadrato",
+      "community": 2,
+      "community_name": "Controlli e stile",
+      "norm_label": ".quadrato fixed 140px ingredient buttons"
+    },
+    {
+      "label": ".resetta margin and border styles",
+      "file_type": "code",
+      "source_file": "css/stile.css",
+      "source_location": "9-12",
+      "id": "resetta_css",
+      "community": 2,
+      "community_name": "Controlli e stile",
+      "norm_label": ".resetta margin and border styles"
+    }
+  ],
+  "links": [
+    {
+      "relation": "loads",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "index.html",
+      "source_location": "9-10",
+      "weight": 1.0,
+      "source": "page",
+      "target": "bootstrap_css"
+    },
+    {
+      "relation": "loads",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "index.html",
+      "source_location": "40-42",
+      "weight": 1.0,
+      "source": "page",
+      "target": "bootstrap_js"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "index.html",
+      "source_location": "19",
+      "weight": 1.0,
+      "source": "page",
+      "target": "ingredient_ui"
+    },
+    {
+      "relation": "executes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "index.html",
+      "source_location": "261-267",
+      "weight": 1.0,
+      "source": "page",
+      "target": "init"
+    },
+    {
+      "relation": "loads",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "index.html",
+      "source_location": "34-36",
+      "weight": 1.0,
+      "source": "page",
+      "target": "jquery"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "index.html",
+      "source_location": "29",
+      "weight": 1.0,
+      "source": "page",
+      "target": "pizza_ui"
+    },
+    {
+      "relation": "loads",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "index.html",
+      "source_location": "37-39",
+      "weight": 1.0,
+      "source": "page",
+      "target": "popper"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "index.html",
+      "source_location": "24-25",
+      "weight": 1.0,
+      "source": "page",
+      "target": "reset_button"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "index.html",
+      "source_location": "23",
+      "weight": 1.0,
+      "source": "page",
+      "target": "selected_ui"
+    },
+    {
+      "relation": "loads",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "index.html",
+      "source_location": "11",
+      "weight": 1.0,
+      "source": "page",
+      "target": "stylesheet"
+    },
+    {
+      "relation": "defines",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "css/stile.css",
+      "source_location": "1-7",
+      "weight": 1.0,
+      "source": "stylesheet",
+      "target": "quadrato"
+    },
+    {
+      "relation": "defines",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "css/stile.css",
+      "source_location": "9-12",
+      "weight": 1.0,
+      "source": "stylesheet",
+      "target": "resetta_css"
+    },
+    {
+      "relation": "generated_buttons_use_style_class",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "index.html",
+      "source_location": "263-265",
+      "weight": 1.0,
+      "source": "ingredient_ui",
+      "target": "quadrato"
+    },
+    {
+      "relation": "generated_buttons_call_on_click",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "index.html",
+      "source_location": "263-265",
+      "weight": 1.0,
+      "source": "ingredient_ui",
+      "target": "update"
+    },
+    {
+      "relation": "writes_innerHTML",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "index.html",
+      "source_location": "265",
+      "weight": 1.0,
+      "source": "init",
+      "target": "ingredient_ui"
+    },
+    {
+      "relation": "writes_innerHTML",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "index.html",
+      "source_location": "221-225",
+      "weight": 1.0,
+      "source": "update",
+      "target": "selected_ui"
+    },
+    {
+      "relation": "writes_innerHTML",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "index.html",
+      "source_location": "258",
+      "weight": 1.0,
+      "source": "select",
+      "target": "pizza_ui"
+    },
+    {
+      "relation": "calls_on_click",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "index.html",
+      "source_location": "25",
+      "weight": 1.0,
+      "source": "reset_button",
+      "target": "reset"
+    },
+    {
+      "relation": "uses_style_class",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "index.html",
+      "source_location": "24",
+      "weight": 1.0,
+      "source": "reset_button",
+      "target": "resetta_css"
+    },
+    {
+      "relation": "appends_button_markup_and_reads",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "index.html",
+      "source_location": "263-265",
+      "weight": 1.0,
+      "source": "init",
+      "target": "output"
+    },
+    {
+      "relation": "clears",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "index.html",
+      "source_location": "206",
+      "weight": 1.0,
+      "source": "reset",
+      "target": "selected"
+    },
+    {
+      "relation": "appends_and_reads",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "index.html",
+      "source_location": "213-221",
+      "weight": 1.0,
+      "source": "update",
+      "target": "selected"
+    },
+    {
+      "relation": "sorts_in_place",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "index.html",
+      "source_location": "261",
+      "weight": 1.0,
+      "source": "init",
+      "target": "ingredient_catalog"
+    },
+    {
+      "relation": "sorts_in_place_and_reassigns",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "index.html",
+      "source_location": "267",
+      "weight": 1.0,
+      "source": "init",
+      "target": "pizza_catalog"
+    },
+    {
+      "relation": "iterates",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "index.html",
+      "source_location": "237",
+      "weight": 1.0,
+      "source": "select",
+      "target": "pizza_catalog"
+    },
+    {
+      "relation": "calls_as_sort_comparator",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "index.html",
+      "source_location": "261",
+      "weight": 1.0,
+      "source": "init",
+      "target": "sort_ingredients"
+    },
+    {
+      "relation": "calls_as_sort_comparator",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "index.html",
+      "source_location": "267",
+      "weight": 1.0,
+      "source": "init",
+      "target": "sort_pizzas"
+    },
+    {
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "index.html",
+      "source_location": "207",
+      "weight": 1.0,
+      "source": "reset",
+      "target": "update"
+    },
+    {
+      "relation": "calls_with_selected_ingredients",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "index.html",
+      "source_location": "227",
+      "weight": 1.0,
+      "source": "update",
+      "target": "select"
+    },
+    {
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "index.html",
+      "source_location": "243",
+      "weight": 1.0,
+      "source": "select",
+      "target": "contains"
+    }
+  ],
+  "hyperedges": [],
+  "built_at_commit": "55c0f53ff5b14e0ede5d8cf743e6951d63428ed3"
+}

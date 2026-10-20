@@ -1,271 +1,96 @@
-<!DOCTYPE html>
-<html lang="en">
-
+<!doctype html>
+<html lang="it">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Scegli la tua Pizza</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <link rel="stylesheet" href="css/stile.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f8f6ef">
+  <meta name="description" content="Dimmi cosa ti piace, ti dico che pizza sei. Scegli i tuoi ingredienti e scopri la pizza per il tuo mood.">
+  <title>Pizza Mood — La pizza giusta per te</title>
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="css/stile.css">
+  <script type="module" src="js/app.js"></script>
 </head>
-
 <body>
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-sm-4">
-                <h3>Scegli ingredienti</h3>
-                <div id="ingredienti"></div>
-            </div>
-            <div class="col-sm-2">
-                <h3>Scelti</h3>
-                <div id="scelti"></div>
-                <button type="button" class="btn btn-light btn-sm rounded-0 btn-block resetta"
-                    onclick="resetta()">Resetta</button>
-            </div>
-            <div class="col-sm-6">
-                <h3>Pizze proposte</h3>
-                <div id="pizze"></div>
-            </div>
+  <a class="skip-link" href="#ingredient-picker">Vai agli ingredienti</a>
+  <div id="loading" class="loading-note" role="status">Un attimo, prepariamo gli ingredienti…</div>
+  <p id="load-error" class="load-error" role="alert" hidden>Non siamo riusciti a caricare la pagina. Controlla la connessione e <a href="">riprova</a>.</p>
+  <noscript><p class="load-error">Attiva JavaScript per scegliere gli ingredienti e trovare la tua pizza.</p></noscript>
+  <div id="app" v-cloak>
+    <header class="site-header page-width flex items-center justify-between gap-4">
+      <a href="./" class="brand flex items-center gap-2.5" aria-label="Pizza Mood, pagina iniziale">
+        <span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 40 40"><path d="m9 8 26 6-18 22Z" fill="#f6cd76" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M9 8q14-3 26 6" stroke="#dc5840" stroke-width="7" stroke-linecap="round"/><circle cx="19" cy="18" r="3" fill="#d85c43"/><circle cx="23" cy="26" r="2.5" fill="#d85c43"/><path d="m15 27 3-5" stroke="#547a45" stroke-width="3" stroke-linecap="round"/></svg></span>
+        <span>pizza<span class="brand-accent">mood</span><span class="brand-dot">.</span></span>
+      </a>
+      <span class="header-note hidden sm:flex items-center gap-2"><span class="status-dot"></span>La vita è troppo corta per la pizza sbagliata.</span>
+      <a href="#ingredient-picker" class="header-link flex items-center gap-2">Trova la tua <span aria-hidden="true">↗</span></a>
+    </header>
+    <main class="page-width">
+      <section class="hero grid items-center gap-8 lg:grid-cols-[1.1fr_1fr]" aria-labelledby="hero-title">
+        <div class="hero-copy">
+          <p class="eyebrow flex items-center gap-2"><span aria-hidden="true">✳</span> QUESTIONE DI GUSTI. I TUOI.</p>
+          <h1 id="hero-title">Hai voglia di pizza.<br>Ma <span class="title-highlight">quale pizza?</span></h1>
+          <p class="hero-description">Parti dagli ingredienti che ami.<br> La tua prossima pizza è già qui.</p>
+          <a class="hero-cta inline-flex items-center gap-3" href="#ingredient-picker">Troviamola <span aria-hidden="true">↓</span></a>
         </div>
-    </div>
-
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-        crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
-        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-        crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
-        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-        crossorigin="anonymous"></script>
-
-    <script>
-        var output = [];
-        var scelti = [];
-
-        let listaIngredienti = [
-            { text: "Acciughe" },
-            { text: "Aglio" },
-            { text: "Ananas" },
-            { text: "Aneto" },
-            { text: "Basilico" },
-            { text: "Bresaola" },
-            { text: "Brie" },
-            { text: "Caciotta" },
-            { text: "Capperi" },
-            { text: "Carciofini" },
-            { text: "Cipolle" },
-            { text: "Fagioli" },
-            { text: "Fiori di zucca" },
-            { text: "Friarielli" },
-            { text: "Frutti di mare" },
-            { text: "Funghi" },
-            { text: "Funghi porcini" },
-            { text: "Gamberetti" },
-            { text: "Gorgonzola" },
-            { text: "Grana Padano" },
-            { text: "Lardo" },
-            { text: "Mais" },
-            { text: "Melanzane" },
-            { text: "Mozzarella" },
-            { text: "Mozzarella bufala" },
-            { text: "Nduja" },
-            { text: "Noci" },
-            { text: "Olive nere" },
-            { text: "Olive verdi" },
-            { text: "Origano" },
-            { text: "Pancetta" },
-            { text: "Panna" },
-            { text: "Parmigiano" },
-            { text: "Patate" },
-            { text: "Patatine fritte" },
-            { text: "Pecorino" },
-            { text: "Peperoni" },
-            { text: "Pere" },
-            { text: "Pesto" },
-            { text: "Pinoli" },
-            { text: "Piselli" },
-            { text: "Pistacchio" },
-            { text: "Pomodori secchi" },
-            { text: "Pomodoro" },
-            { text: "Pomodoro datterino" },
-            { text: "Pomodoro fresco" },
-            { text: "Prezzemolo" },
-            { text: "Prosciutto cotto" },
-            { text: "Prosciutto crudo" },
-            { text: "Provola" },
-            { text: "Radicchio" },
-            { text: "Ricotta" },
-            { text: "Rosmarino" },
-            { text: "Rucola" },
-            { text: "Salame" },
-            { text: "Salame piccante" },
-            { text: "Salmone" },
-            { text: "Salsiccia" },
-            { text: "Speck" },
-            { text: "Spinaci" },
-            { text: "Stracchino" },
-            { text: "Tonno" },
-            { text: "Uovo" },
-            { text: "Wurstel" },
-        ];
-
-        // { text: '' },
-
-        let listaPizze = [
-            { nomepizza: 'Marinara', ingredienti: ['Pomodoro', 'Origano', 'Aglio'] },
-            { nomepizza: 'Margherita', ingredienti: ['Pomodoro', 'Mozzarella', 'Basilico'] },
-            { nomepizza: 'Greca', ingredienti: ['Pomodoro', 'Mozzarella', 'Olive nere'] },
-            { nomepizza: 'Rosmarino', ingredienti: ['Pomodoro', 'Mozzarella', 'Rosmarino'] },
-            { nomepizza: 'Basilico', ingredienti: ['Pomodoro', 'Mozzarella', 'Basilico'] },
-            { nomepizza: 'Aglio', ingredienti: ['Pomodoro', 'Mozzarella', 'Aglio'] },
-            { nomepizza: 'Capperi', ingredienti: ['Pomodoro', 'Mozzarella', 'Capperi'] },
-            { nomepizza: 'Napoletana', ingredienti: ['Pomodoro', 'Mozzarella', 'Capperi', 'Acciughe'] },
-            { nomepizza: 'Romana', ingredienti: ['Pomodoro', 'Mozzarella', 'Origano', 'Acciughe'] },
-            { nomepizza: 'Bismarck', ingredienti: ['Pomodoro', 'Mozzarella', 'Uovo', 'Prosciutto cotto'] },
-            { nomepizza: 'Bianca', ingredienti: ['Rosmarino'] },
-            { nomepizza: 'Diavola', ingredienti: ['Pomodoro', 'Mozzarella', 'Salame piccante'] },
-            { nomepizza: 'Boscaiola', ingredienti: ['Pomodoro', 'Mozzarella', 'Salsiccia', 'Funghi'] },
-            { nomepizza: 'Quattro formaggi', ingredienti: ['Mozzarella', 'Parmigiano', 'Gorgonzola', 'Provola'] },
-            { nomepizza: 'Quattro stagioni', ingredienti: ['Pomodoro', 'Mozzarella', 'Carciofini', 'Prosciutto cotto', 'Funghi', 'Olive verdi', 'Olive nere'] },
-            { nomepizza: 'Capricciosa', ingredienti: ['Pomodoro', 'Mozzarella', 'Carciofini', 'Prosciutto cotto', 'Funghi', 'Olive nere'] },
-            { nomepizza: 'Salsiccia', ingredienti: ['Pomodoro', 'Mozzarella', 'Salsiccia'] },
-            { nomepizza: 'Salsiccia e patate', ingredienti: ['Mozzarella', 'Salsiccia', 'Patate'] },
-            { nomepizza: 'Frutti di mare', ingredienti: ['Pomodoro', 'Mozzarella', 'Frutti di mare'] },
-            { nomepizza: 'Mari e monti', ingredienti: ['Pomodoro', 'Mozzarella', 'Prosciutto cotto', 'Funghi', 'Frutti di mare'] },
-            { nomepizza: 'Ortolana', ingredienti: ['Pomodoro', 'Mozzarella', 'Melanzane', 'Zucchine', 'Peperoni'] },
-            { nomepizza: 'Calabrese', ingredienti: ['Pomodoro', 'Mozzarella', 'Cipolla', 'Nduja'] },
-            { nomepizza: 'Wurstel', ingredienti: ['Pomodoro', 'Mozzarella', 'Wurstel'] },
-            { nomepizza: 'Tirolese', ingredienti: ['Pomodoro', 'Mozzarella', 'Radicchio', 'Speck'] },
-            { nomepizza: 'Salmone', ingredienti: ['Mozzarella', 'Salmone', 'Aneto'] },
-            { nomepizza: 'Gamberetti e zucchine', ingredienti: ['Mozzarella', 'Gamberetti', 'Zucchine'] },
-            { nomepizza: 'Mediterranea', ingredienti: ['Pomodoro', 'Pomodoro fresco', 'Melanzane', 'Zucchine', 'Basilico', 'Capperi'] },
-            { nomepizza: 'Tonno e cipolle', ingredienti: ['Pomodoro', 'Tonno', 'Cipolle'] },
-            { nomepizza: 'Rossa', ingredienti: ['Pomodoro'] },
-            { nomepizza: 'Funghi', ingredienti: ['Pomodoro', 'Mozzarella', 'Funghi'] },
-            { nomepizza: 'Pugliese', ingredienti: ['Pomodoro', 'Mozzarella', 'Cipolle'] },
-            { nomepizza: 'Patapizza', ingredienti: ['Pomodoro', 'Mozzarella', 'Patatine fritte'] },
-            { nomepizza: 'Siciliana', ingredienti: ['Pomodoro', 'Acciughe', 'Olive verdi', 'Origano'] },
-            { nomepizza: 'Regina', ingredienti: ['Pomodoro', 'Mozzarella', 'Prosciutto cotto', 'Funghi'] },
-            { nomepizza: 'Zola', ingredienti: ['Pomodoro', 'Mozzarella', 'Gorgonzola'] },
-            { nomepizza: 'Bufala', ingredienti: ['Pomodoro', 'Mozzarella bufala', 'Basilico'] },
-            { nomepizza: 'Americana', ingredienti: ['Pomodoro', 'Mozzarella', 'Wurstel', 'Patatine fritte'] },
-            { nomepizza: 'Crudo', ingredienti: ['Pomodoro', 'Mozzarella', 'Prosciutto crudo'] },
-            { nomepizza: 'Tedesca', ingredienti: ['Pomodoro', 'Mozzarella', 'Salsiccia', 'Patatine fritte'] },
-            { nomepizza: 'Valtellina', ingredienti: ['Pomodoro', 'Mozzarella', 'Bresaola', 'Rucola', 'Grana Padano'] },
-            { nomepizza: 'Carbonara', ingredienti: ['Pomodoro', 'Mozzarella', 'Pancetta', 'Uovo', 'Grana Padano'] },
-            { nomepizza: 'Vulcano', ingredienti: ['Pomodoro', 'Mozzarella', 'Salsiccia', 'Salame piccante', 'Peperoni'] },
-            { nomepizza: 'Saporita', ingredienti: ['Pistacchio', 'Mozzarella', 'Salsiccia', 'Parmigiano'] },
-            { nomepizza: 'Verace', ingredienti: ['Pomodoro datterino', 'Mozzarella bufala', 'Pecorino', 'Parmigiano', 'Basilico'] },
-            { nomepizza: 'Regina', ingredienti: ['Pomodoro', 'Mozzarella bufala', 'Parmigiano', 'Basilico'] },
-            { nomepizza: 'Profumata', ingredienti: ['Pomodoro datterino', 'Mozzarella bufala', 'Rucola', 'Parmigiano', 'Basilico'] },
-            { nomepizza: 'Fior di zucca', ingredienti: ['Ricotta', 'Provola', 'Salame', 'Fiori di zucca', 'Parmigiano', 'Basilico'] },
-            { nomepizza: 'Pesto', ingredienti: ['Pesto', 'Provola', 'Salsiccia', 'Parmigiano', 'Basilico'] },
-            { nomepizza: 'Lardiata', ingredienti: ['Pomodoro datterino', 'Provola', 'Lardo', 'Parmigiano', 'Basilico'] },
-            { nomepizza: 'Porcini', ingredienti: ['Funghi porcini', 'Provola', 'Salsiccia', 'Parmigiano', 'Basilico'] },
-            { nomepizza: 'Noci', ingredienti: ['Noci', 'Provola', 'Salsiccia', 'Parmigiano'] },
-            { nomepizza: 'Caprese', ingredienti: ['Pomodoro datterino', 'Mozzarella', 'Parmigiano', 'Basilico'] },
-            { nomepizza: 'Cafona', ingredienti: ['Panna', 'Prosciutto cotto', 'Mozzarella', 'Crocché', 'Parmigiano'] },
-            { nomepizza: 'Monte bianco', ingredienti: ['Mozzarella', 'Prosciutto crudo', 'Parmigiano'] },
-            { nomepizza: 'Rucola', ingredienti: ['Pomodoro', 'Prosciutto crudo', 'Rucola', 'Parmigiano'] },
-            { nomepizza: 'Parmigiana', ingredienti: ['Pomodoro', 'Mozzarella', 'Melanzane', 'Prosciutto crudo', 'Parmigiano'] },
-            { nomepizza: 'Prosciutto e funghi', ingredienti: ['Pomodoro', 'Mozzarella', 'Prosciutto cotto', 'Funghi porcini', 'Parmigiano'] },
-            { nomepizza: 'Salsiccia e friarielli', ingredienti: ['Provola', 'Salsiccia', 'Friarielli', 'Parmigiano'] },
-            { nomepizza: 'Hawai', ingredienti: ['Pomodoro', 'Mozzarella', 'Prosciutto cotto', 'Ananas'] },
-            { nomepizza: 'Speck e brie', ingredienti: ['Pomodoro', 'Mozzarella', 'Brie', 'Speck'] },
-            { nomepizza: 'Pere e brie', ingredienti: ['Pere', 'Brie', 'Mozzarella', 'Parmigiano'] },
-            { nomepizza: 'Mimosa', ingredienti: ['Pomodoro', 'Panna', 'Mais'] },
-            { nomepizza: 'Pecorino e pomodorini', ingredienti: ['Pomodoro datterino', 'Pecorino', 'Mozzarella', 'Basilico'] },
-            { nomepizza: 'Messicana', ingredienti: ['Mozzarella', 'Cipolle', 'Fagioli'] },
-            { nomepizza: 'Salento', ingredienti: ['Pomodoro datterino', 'Caciotta', 'Rucola'] },
-        ]
-
-        // { nomepizza: '', ingredienti: ['Pomodoro', '', ''] },
-        // { nomepizza: '', ingredienti: ['Pomodoro', 'Mozzarella', ''] },
-        // { nomepizza: '', ingredienti: ['', '', ''] },
-
-        function ordinaIngredienti(a, b) {
-            if (a.text < b.text)
-                return -1;
-            if (a.text > b.text)
-                return 1;
-            return 0;
-        }
-
-        function ordinaPizze(a, b) {
-            if (a.nomepizza < b.nomepizza)
-                return -1;
-            if (a.nomepizza > b.nomepizza)
-                return 1;
-            return 0;
-        }
-
-        function resetta() {
-            scelti = [];
-            aggiorna();
-        }
-
-        function aggiorna(ingrediente) {
-
-            // Controlla se ingrediente è assente da scelti e poi aggiungi
-            if (ingrediente != null) {
-                scelti.push(ingrediente);
-            }
-
-            let listascelti = [];
-            for (var i = 0, f; f = scelti[i]; ++i) {
-                listascelti.push('', f, '<br>');
-            }
-            if (scelti.length != 0) {
-                document.querySelector('#scelti').innerHTML = '<p>' + listascelti.join('') + '</p>';
-            } else {
-                document.querySelector('#scelti').innerHTML = '';
-            }
-
-            seleziona(scelti);
-        }
-
-        function controlla(arr, obj) {
-            return (arr.indexOf(obj) != -1);
-        }
-
-        function seleziona(ingredientiselezionati) {
-            let listapizze = [];
-
-            for (var p = 0, pizza; pizza = listaPizze[p]; ++p) {
-
-                let presente = false;
-                let nonpresente = true;
-                for (var is = 0, ing_s; ing_s = ingredientiselezionati[is]; ++is) {
-
-                    presente = controlla(pizza.ingredienti, ing_s);
-                    if (presente) {
-                        // console.log("  presente ingrediente " + ing_s)
-                    } else {
-                        nonpresente = false;
-                        // console.log("  non presente ingrediente " + ing_s)
-                    }
-                }
-
-                if (presente && nonpresente) {
-                    listapizze.push('' + pizza.nomepizza + ' (' + pizza.ingredienti.join(', ') + ')<br>');
-                }
-                // console.log("---------------------------------------------")
-            }
-
-            document.querySelector('#pizze').innerHTML = '<p>' + listapizze.join('') + '</p>';
-        }
-
-        let listaIngredientiOrdinata = listaIngredienti.sort(ordinaIngredienti);
-        for (var i = 0, f; f = listaIngredientiOrdinata[i]; ++i) {
-            output.push('<button type="button" class="btn btn-light btn-sm rounded-0 quadrato" onclick="aggiorna(\'', f.text, '\')">', f.text, '</button>');
-        }
-        document.querySelector('#ingredienti').innerHTML = '' + output.join('') + '';
-
-        listaPizze = listaPizze.sort(ordinaPizze);
-    </script>
+        <div class="hero-visual" aria-hidden="true">
+          <div class="hero-grid"></div><span class="hero-doodle doodle-one">✳</span><span class="hero-doodle doodle-two">✦</span>
+          <pizza-art class="hero-pizza"></pizza-art>
+          <div class="hero-label label-tomato"><ingredient-icon name="tomato"></ingredient-icon><span>Un po’ di te.</span></div>
+          <div class="hero-label label-leaf"><ingredient-icon name="leaf"></ingredient-icon><span>Un sacco di gusto.</span></div>
+          <div class="hero-sticker"><span>{{ pizzas.length }}</span><span>pizze da<br>scoprire</span></div>
+        </div>
+      </section>
+      <div class="workspace grid items-start gap-7 lg:grid-cols-[1.1fr_1fr]">
+        <section id="ingredient-picker" class="picker-panel" aria-labelledby="ingredients-title">
+          <div class="section-heading flex items-start justify-between gap-3">
+            <div><p class="step-label">01 / IL TUO PUNTO DI PARTENZA</p><h2 id="ingredients-title">Cosa ci mettiamo?</h2></div>
+            <span class="tiny-label">Segui la voglia <span aria-hidden="true">↙</span></span>
+          </div>
+          <p class="section-intro">Scegli i tuoi ingredienti. Puoi cambiare idea quando vuoi.</p>
+          <div class="search-box flex items-center gap-3">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m15.5 15.5 5 5"/></svg>
+            <label for="ingredient-search" class="sr-only">Cerca un ingrediente</label>
+            <input id="ingredient-search" type="search" v-model="query" placeholder="Cerca un ingrediente…" autocomplete="off">
+          </div>
+          <div class="category-list flex flex-wrap gap-2" role="group" aria-label="Categorie degli ingredienti">
+            <button v-for="item in categories" :key="item.id" type="button" class="category-button inline-flex items-center gap-1.5" :class="{ active: category === item.id }" :aria-pressed="category === item.id" @click="category = item.id"><ingredient-icon :name="item.icon"></ingredient-icon>{{ item.label }}</button>
+          </div>
+          <div class="ingredients-grid grid grid-cols-3 gap-2.5 sm:grid-cols-4" aria-label="Ingredienti disponibili">
+            <button v-for="item in shownIngredients" :key="item.id" type="button" class="ingredient-tile" :class="[{ selected: selectedIds.includes(item.id) }, 'ingredient-' + item.category]" :aria-pressed="selectedIds.includes(item.id)" :disabled="item.recipeCount === 0" :aria-label="item.recipeCount ? item.name : item.name + ': nessuna ricetta nel catalogo'" @click="toggle(item.id)">
+              <span class="ingredient-toggle" aria-hidden="true">{{ selectedIds.includes(item.id) ? '✓' : '+' }}</span>
+              <ingredient-icon class="ingredient-art" :name="item.icon"></ingredient-icon><span class="ingredient-name">{{ item.name }}</span>
+              <span v-if="!item.recipeCount" class="unavailable-note">Nessuna ricetta</span>
+            </button>
+          </div>
+          <div v-if="!shownIngredients.length" class="search-empty"><span aria-hidden="true">⌕</span><p>Nessun ingrediente trovato.</p><button type="button" class="text-button" @click="query = ''; category = 'all'">Mostra tutti gli ingredienti</button></div>
+          <button v-if="canExpand" class="expand-button" type="button" @click="expanded = true">Esplora tutti i {{ ingredients.length }} ingredienti <span aria-hidden="true">↓</span></button>
+          <button v-else-if="expanded && !query && category === 'all'" class="expand-button" type="button" @click="expanded = false">Mostra meno ingredienti <span aria-hidden="true">↑</span></button>
+          <div class="selection-panel" :class="{ 'has-selection': selectedIds.length }">
+            <div class="flex items-center justify-between gap-3"><h3>Il tuo mix <span class="mix-count">{{ selectedIds.length }}</span></h3><button v-if="selectedIds.length" type="button" class="text-button reset-button" @click="reset">Svuota tutto</button></div>
+            <div v-if="selectedIds.length" class="selected-chips flex flex-wrap gap-2"><button v-for="item in selectedIngredients" :key="item.id" class="selected-chip inline-flex items-center gap-1.5" type="button" :aria-label="'Rimuovi ' + item.name" @click="toggle(item.id)"><ingredient-icon :name="item.icon"></ingredient-icon>{{ item.name }}<span aria-hidden="true">×</span></button></div>
+            <p v-else class="selection-hint">Ancora tutto da inventare. Tocca un ingrediente qui sopra.</p>
+          </div>
+        </section>
+        <section id="results" class="results-panel lg:sticky lg:top-6" aria-labelledby="results-title">
+          <div class="section-heading flex items-start justify-between gap-3"><div><p class="step-label">02 / IL MATCH PERFETTO</p><h2 id="results-title">{{ selectedIds.length ? 'Ecco il tuo mood.' : 'Ti va una di queste?' }}</h2></div><span class="result-count" aria-live="polite" aria-atomic="true">{{ matchingPizzas.length }} {{ matchingPizzas.length === 1 ? 'pizza' : 'pizze' }}</span></div>
+          <p class="results-rule">{{ !matchingPizzas.length ? 'Questo mix non ha ancora trovato la sua pizza.' : selectedIds.length ? 'Tutte contengono gli ingredienti che hai scelto.' : 'Il catalogo è tutto tuo. Scegli un ingrediente per iniziare.' }}</p>
+          <div v-if="matchingPizzas.length" class="pizza-list">
+            <article v-for="pizza in shownPizzas" :key="pizza.id" class="pizza-card flex items-center gap-3" :class="{ 'pizza-suggested': pizza.id === suggestedId }">
+              <div class="pizza-thumb" :class="{ 'white-pizza': !pizza.ingredientIds.some(id => id.startsWith('pomodor')) }"><pizza-art :ingredient-ids="pizza.ingredientIds"></pizza-art></div>
+              <div class="pizza-info"><span v-if="pizza.id === suggestedId" class="suggested-label">LA SCELTA DEL MOMENTO ✦</span><h3>{{ pizza.name }}</h3><p><template v-for="(id, index) in pizza.ingredientIds" :key="id"><span :class="{ 'matched-ingredient': selectedIds.includes(id) }">{{ ingredientMap[id].name }}</span><span v-if="index < pizza.ingredientIds.length - 1">, </span></template></p></div>
+              <span v-if="selectedIds.length" class="match-check" aria-label="Contiene tutti gli ingredienti scelti">✓</span>
+            </article>
+          </div>
+          <div v-else class="no-results"><ingredient-icon name="mushroom"></ingredient-icon><h3>Un mix fuori menu.</h3><p>Nessuna delle nostre pizze contiene tutti questi ingredienti. Prova a toglierne uno dal tuo mix.</p><div class="flex flex-wrap justify-center gap-2"><button v-for="item in selectedIngredients" :key="item.id" type="button" class="selected-chip" :aria-label="'Rimuovi ' + item.name" @click="toggle(item.id)">{{ item.name }} <span aria-hidden="true">×</span></button></div><button class="text-button" type="button" @click="reset">Ripartiamo da zero</button></div>
+          <button v-if="shownPizzas.length < matchingPizzas.length" type="button" class="more-results" @click="resultLimit += 12">Altre {{ Math.min(12, matchingPizzas.length - shownPizzas.length) }} pizze da scoprire <span aria-hidden="true">↓</span></button>
+          <button v-if="matchingPizzas.length" type="button" class="surprise-button flex items-center justify-between gap-3" @click="surprise"><span class="flex items-center gap-3"><span class="surprise-icon" aria-hidden="true">✳</span><span><strong>Indecisione da pizza?</strong><span>Scegliamo noi tra quelle che ti piacciono.</span></span></span><span class="surprise-arrow" aria-hidden="true">↗</span></button>
+          <p class="results-footnote">Le ricette possono avere ingredienti in più rispetto al tuo mix.</p>
+        </section>
+      </div>
+      <section class="closing-note flex items-center justify-center gap-3"><span aria-hidden="true">✳</span><p>Il gusto giusto? <strong>È il tuo.</strong></p><span aria-hidden="true">✳</span></section>
+    </main>
+    <footer class="page-width site-footer flex flex-wrap items-center justify-between gap-3"><span class="footer-brand">pizzamood.</span><p>Fatto per chi alla pizza non dice mai di no.</p><span class="footer-note">BUON MOOD, BUONA PIZZA.</span></footer>
+    <a v-if="selectedIds.length" href="#results" class="mobile-results lg:hidden">{{ matchingPizzas.length }} {{ matchingPizzas.length === 1 ? 'pizza per te' : 'pizze per te' }} <span aria-hidden="true">↓</span></a>
+  </div>
 </body>
-
 </html>

@@ -1,0 +1,78 @@
+{
+  "ingredientCount": 64,
+  "pizzaCount": 65,
+  "uniqueUsedIngredientCount": 61,
+  "missingSelectableIngredients": [
+    "Crocché",
+    "Cipolla",
+    "Zucchine"
+  ],
+  "unusedSelectableIngredients": [
+    "Pinoli",
+    "Piselli",
+    "Pomodori secchi",
+    "Prezzemolo",
+    "Spinaci",
+    "Stracchino"
+  ],
+  "duplicatedNames": [
+    "Regina"
+  ],
+  "identicalRecipes": [
+    [
+      "Basilico",
+      "Margherita"
+    ]
+  ],
+  "hasMojibake": false,
+  "hasCorrectCrocche": true,
+  "cases": [
+    {
+      "name": "Initial page",
+      "selection": [],
+      "resultHTML": "",
+      "selectionHTML": ""
+    },
+    {
+      "name": "Select basil",
+      "selection": [
+        "Basilico"
+      ],
+      "resultHTML": "<p>Basilico (Pomodoro, Mozzarella, Basilico)<br>Bufala (Pomodoro, Mozzarella bufala, Basilico)<br>Caprese (Pomodoro datterino, Mozzarella, Parmigiano, Basilico)<br>Fior di zucca (Ricotta, Provola, Salame, Fiori di zucca, Parmigiano, Basilico)<br>Lardiata (Pomodoro datterino, Provola, Lardo, Parmigiano, Basilico)<br>Margherita (Pomodoro, Mozzarella, Basilico)<br>Mediterranea (Pomodoro, Pomodoro fresco, Melanzane, Zucchine, Basilico, Capperi)<br>Pecorino e pomodorini (Pomodoro datterino, Pecorino, Mozzarella, Basilico)<br>Pesto (Pesto, Provola, Salsiccia, Parmigiano, Basilico)<br>Porcini (Funghi porcini, Provola, Salsiccia, Parmigiano, Basilico)<br>Profumata (Pomodoro datterino, Mozzarella bufala, Rucola, Parmigiano, Basilico)<br>Regina (Pomodoro, Mozzarella bufala, Parmigiano, Basilico)<br>Verace (Pomodoro datterino, Mozzarella bufala, Pecorino, Parmigiano, Basilico)<br></p>",
+      "selectionHTML": "<p>Basilico<br></p>"
+    },
+    {
+      "name": "Select basil again",
+      "selection": [
+        "Basilico",
+        "Basilico"
+      ],
+      "resultHTML": "<p>Basilico (Pomodoro, Mozzarella, Basilico)<br>Bufala (Pomodoro, Mozzarella bufala, Basilico)<br>Caprese (Pomodoro datterino, Mozzarella, Parmigiano, Basilico)<br>Fior di zucca (Ricotta, Provola, Salame, Fiori di zucca, Parmigiano, Basilico)<br>Lardiata (Pomodoro datterino, Provola, Lardo, Parmigiano, Basilico)<br>Margherita (Pomodoro, Mozzarella, Basilico)<br>Mediterranea (Pomodoro, Pomodoro fresco, Melanzane, Zucchine, Basilico, Capperi)<br>Pecorino e pomodorini (Pomodoro datterino, Pecorino, Mozzarella, Basilico)<br>Pesto (Pesto, Provola, Salsiccia, Parmigiano, Basilico)<br>Porcini (Funghi porcini, Provola, Salsiccia, Parmigiano, Basilico)<br>Profumata (Pomodoro datterino, Mozzarella bufala, Rucola, Parmigiano, Basilico)<br>Regina (Pomodoro, Mozzarella bufala, Parmigiano, Basilico)<br>Verace (Pomodoro datterino, Mozzarella bufala, Pecorino, Parmigiano, Basilico)<br></p>",
+      "selectionHTML": "<p>Basilico<br>Basilico<br></p>"
+    },
+    {
+      "name": "Reset",
+      "selection": [],
+      "resultHTML": "<p></p>",
+      "selectionHTML": ""
+    },
+    {
+      "name": "Impossible combination",
+      "selection": [
+        "Ananas",
+        "Aneto"
+      ],
+      "resultHTML": "<p></p>",
+      "selectionHTML": "<p>Ananas<br>Aneto<br></p>"
+    }
+  ],
+  "filterVerification": {
+    "selected": [
+      "Pomodoro",
+      "Mozzarella"
+    ],
+    "resultCount": 35,
+    "agreesWithEveryPredicate": true,
+    "cipolleExcludesCalabrese": true
+  }
+}

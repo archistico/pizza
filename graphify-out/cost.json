@@ -1,0 +1,13 @@
+{
+  "runs": [
+    {
+      "date": "2026-10-20T20:53:02.408455+00:00",
+      "input_tokens": null,
+      "output_tokens": null,
+      "files": 1
+    }
+  ],
+  "total_input_tokens": null,
+  "total_output_tokens": null,
+  "note": "Token usage not exposed by collaboration API."
+}
