@@ -7,6 +7,8 @@ Il catalogo comprende 112 ricette e 91 ingredienti, tutti associati ad almeno un
 Pagina statica in italiano, con Vue 3.5.44 via CDN e Tailwind CSS 4.3.3
 compilato in un file locale. Non occorre compilare JavaScript.
 
+[Demo](https://archistico.github.io/pizza/)
+
 ## Avvio
 
 Con Node.js 24 o successivo:
