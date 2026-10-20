@@ -6,6 +6,10 @@ export function filterPizzas(pizzas, selectedIds) {
   return pizzas.filter(pizza => selectedIds.every(id => pizza.ingredientIds.includes(id)));
 }
 
+export function getAvailableIngredientIds(matchingPizzas, selectedIds = []) {
+  return new Set([...selectedIds, ...matchingPizzas.flatMap(pizza => pizza.ingredientIds)]);
+}
+
 export function filterIngredients(ingredients, query, category = 'all') {
   const search = normalizeSearch(query);
   return ingredients.filter(item => (category === 'all' || item.category === category)

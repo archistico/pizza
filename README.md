@@ -57,8 +57,13 @@ All'apertura vengono mostrate sei pizze del catalogo, con un pulsante per
 mostrarne altre. Il contatore indica sempre il totale delle corrispondenze.
 Le prime 18 proposte di ingredienti sono una selezione editoriale, non
 statistiche d'uso. Tutti i 91 ingredienti sono accessibili con ricerca,
-categorie o espansione. Ogni ingrediente è selezionabile e restituisce almeno
-una pizza. Le due Regina conservano nome e ricette
+categorie o espansione. Senza selezioni tutti gli ingredienti sono attivi.
+Dopo ogni scelta restano attivi solo quelli presenti in almeno una pizza
+che contiene tutto il mix; gli altri rimangono visibili ma disabilitati.
+Gli ingredienti scelti si possono sempre togliere, riattivando quelli tornati
+compatibili. “Svuota tutto” ripristina l'intero catalogo. Il calcolo usa tutte
+le pizze compatibili, comprese quelle non ancora mostrate nella lista.
+Le due Regina conservano nome e ricette
 originali ma hanno ID distinti. Le illustrazioni delle pizze sono stilizzate.
 
 Le fonti e gli ingredienti delle 35 aggiunte sono elencati in

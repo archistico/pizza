@@ -49,6 +49,7 @@ try {
   record('avvio, catalogo completo e prima selezione editoriale');
 
   const ingredient = name => page.locator('.ingredients-grid').getByRole('button', { name, exact: true });
+  const incompatibleIngredient = name => page.locator('.ingredients-grid').getByRole('button', { name: `${name}: non compatibile con il mix selezionato`, exact: true });
   const search = page.getByRole('searchbox', { name: 'Cerca un ingrediente' });
   const reset = async () => {
     await page.locator('.selection-panel').getByRole('button', { name: 'Svuota tutto' }).click();
@@ -57,6 +58,19 @@ try {
   await ingredient('Mozzarella').click();
   assert.equal(await page.locator('.result-count').innerText(), '62 pizze');
   assert.equal(await page.locator('.selected-chip').count(), 2);
+  // I piselli sono compatibili con il mix anche se la Tre P non è nelle prime sei pizze.
+  await search.fill('piselli');
+  assert.equal(await ingredient('Piselli').isEnabled(), true);
+  await ingredient('Piselli').click();
+  assert.equal(await page.locator('.pizza-info h3').innerText(), 'Tre P');
+  await search.fill('funghi');
+  assert.equal(await incompatibleIngredient('Funghi').isDisabled(), true);
+  await search.fill('piselli');
+  assert.equal(await ingredient('Piselli').isEnabled(), true);
+  await ingredient('Piselli').click();
+  await search.fill('funghi');
+  assert.equal(await ingredient('Funghi').isEnabled(), true);
+  await search.fill('');
   await ingredient('Mozzarella').click();
   assert.equal(await page.locator('.selected-chip').count(), 1);
   await ingredient('Pomodoro').focus();
@@ -124,16 +138,28 @@ try {
   record('piselli e pomodori secchi selezionabili, con ricette e deselezione');
 
   await search.fill('ananas'); await ingredient('Ananas').click();
-  await search.fill('aneto'); await ingredient('Aneto').click();
-  assert(await page.locator('.no-results').isVisible());
-  assert.equal(await page.locator('.result-count').innerText(), '0 pizze');
-  await page.locator('.no-results').getByRole('button', { name: 'Rimuovi Aneto' }).click();
+  await search.fill('aneto');
+  const blockedAneto = incompatibleIngredient('Aneto');
+  assert.equal(await blockedAneto.isDisabled(), true);
+  assert.equal(await blockedAneto.locator('.unavailable-note').innerText(), 'Non compatibile');
+  // Anche un click DOM non deve selezionare un pulsante disabilitato.
+  await blockedAneto.evaluate(button => button.click());
+  assert.equal(await page.locator('.selected-chip').count(), 1);
   assert.equal(await page.locator('.pizza-info h3').innerText(), 'Hawai');
+  await search.fill('');
+  await page.getByRole('button', { name: 'Extra', exact: true }).click();
+  assert.equal(await incompatibleIngredient('Pistacchio').isDisabled(), true);
+  assert.equal(await ingredient('Ananas').isEnabled(), true);
+  await page.locator('.selection-panel').getByRole('button', { name: 'Rimuovi Ananas', exact: true }).click();
+  assert.equal(await ingredient('Pistacchio').isEnabled(), true);
+  await ingredient('Ananas').click();
   await reset();
+  await search.fill('aneto');
+  assert.equal(await ingredient('Aneto').isEnabled(), true);
   await search.fill('non-esiste');
   assert(await page.getByText('Nessun ingrediente trovato.').isVisible());
   await page.getByRole('button', { name: 'Mostra tutti gli ingredienti' }).click();
-  record('combinazione impossibile, recupero e ricerca vuota');
+  record('ingredienti incompatibili bloccati, ricerca e categorie, riattivazione e reset');
 
   await page.getByRole('button', { name: 'Formaggi', exact: true }).click();
   assert.equal(await page.locator('.ingredient-tile').count(), 18);
@@ -152,11 +178,13 @@ try {
   record('categorie, espansione, tutti gli ingredienti utilizzabili e suggerimento compatibile');
 
   await mkdir(new URL('../out/', import.meta.url), { recursive: true });
+  assert.equal(await page.locator('.footer-credit').innerText(), 'Creato da Emilie Rollandin');
   for (const width of [1440, 1024, 768, 390, 320]) {
     await page.setViewportSize({ width, height: width >= 1024 ? 1050 : 844 });
     assert.equal(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth), false, `Overflow a ${width}px`);
     const clipped = await page.locator('.ingredient-name').evaluateAll(labels => labels.filter(el => el.scrollWidth > el.clientWidth + 1).map(el => el.textContent));
     assert.deepEqual(clipped, [], `Nomi tagliati a ${width}px`);
+    assert.equal(await page.locator('.footer-signature').evaluate(el => el.scrollWidth > el.clientWidth + 1), false, `Firma tagliata a ${width}px`);
     if (width === 1440 || width === 390) {
       await page.evaluate(() => scrollTo(0, 0));
       await page.screenshot({ path: fileURLToPath(new URL(`../out/${width === 1440 ? 'desktop' : 'mobile'}.png`, import.meta.url)), fullPage: true });

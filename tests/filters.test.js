@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import { ingredients, ingredientMap, pizzas, ingredientId } from '../js/data.js';
-import { filterPizzas, filterIngredients, toggleIngredient } from '../js/filters.js';
+import { filterPizzas, filterIngredients, toggleIngredient, getAvailableIngredientIds } from '../js/filters.js';
 
 test('catalogo conservato e riferimenti coerenti anche con nomi di pizza duplicati', () => {
   assert.equal(pizzas.length, 112);
@@ -44,6 +44,23 @@ test('selezione reversibile senza duplicati e senza mutare lo stato precedente',
   assert.deepEqual(selected, ['pomodoro']);
   assert.deepEqual(toggleIngredient(selected, 'pomodoro'), []);
   assert.deepEqual(selected, ['pomodoro']);
+});
+
+test('compatibilità calcolata sul mix completo e ripristinata dopo rimozione o reset', () => {
+  // C compare sia con A sia con B, ma nessuna pizza contiene A, B e C insieme.
+  const recipes = [
+    { ingredientIds: ['a', 'b', 'd'] },
+    { ingredientIds: ['a', 'c'] },
+    { ingredientIds: ['b', 'c'] },
+  ];
+  const available = ids => getAvailableIngredientIds(filterPizzas(recipes, ids), ids);
+  assert.deepEqual([...available([])].sort(), ['a', 'b', 'c', 'd']);
+  assert(available(['a']).has('c'));
+  assert(available(['b']).has('c'));
+  assert.deepEqual([...available(['a', 'b'])].sort(), ['a', 'b', 'd']);
+  assert(available(toggleIngredient(['a', 'b'], 'b')).has('c'));
+  // Anche un eventuale mix senza risultati deve poter essere svuotato.
+  assert.deepEqual([...available(['a', 'b', 'c'])].sort(), ['a', 'b', 'c']);
 });
 
 test('ricerca tollera accenti, maiuscole e spazi e rispetta la categoria', () => {

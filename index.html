@@ -46,7 +46,7 @@
             <div><p class="step-label">01 / IL TUO PUNTO DI PARTENZA</p><h2 id="ingredients-title">Cosa ci mettiamo?</h2></div>
             <span class="tiny-label">Segui la voglia <span aria-hidden="true">↙</span></span>
           </div>
-          <p class="section-intro">Scegli i tuoi ingredienti. Puoi cambiare idea quando vuoi.</p>
+          <p id="ingredient-hint" class="section-intro">{{ selectedIds.length ? 'Restano attivi solo gli ingredienti compatibili con il tuo mix.' : 'Scegli i tuoi ingredienti. Puoi cambiare idea quando vuoi.' }}</p>
           <div class="search-box flex items-center gap-3">
             <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m15.5 15.5 5 5"/></svg>
             <label for="ingredient-search" class="sr-only">Cerca un ingrediente</label>
@@ -56,10 +56,10 @@
             <button v-for="item in categories" :key="item.id" type="button" class="category-button inline-flex items-center gap-1.5" :class="{ active: category === item.id }" :aria-pressed="category === item.id" @click="category = item.id"><ingredient-icon :name="item.icon"></ingredient-icon>{{ item.label }}</button>
           </div>
           <div class="ingredients-grid grid grid-cols-3 gap-2.5 sm:grid-cols-4" aria-label="Ingredienti disponibili">
-            <button v-for="item in shownIngredients" :key="item.id" type="button" class="ingredient-tile" :class="[{ selected: selectedIds.includes(item.id) }, 'ingredient-' + item.category]" :aria-pressed="selectedIds.includes(item.id)" :disabled="item.recipeCount === 0" :aria-label="item.recipeCount ? item.name : item.name + ': nessuna ricetta nel catalogo'" @click="toggle(item.id)">
+            <button v-for="item in shownIngredients" :key="item.id" type="button" class="ingredient-tile" :class="[{ selected: selectedIds.includes(item.id) }, 'ingredient-' + item.category]" :aria-pressed="selectedIds.includes(item.id)" :disabled="!availableIngredientIds.has(item.id)" :aria-label="availableIngredientIds.has(item.id) ? item.name : item.name + (item.recipeCount ? ': non compatibile con il mix selezionato' : ': nessuna ricetta nel catalogo')" aria-describedby="ingredient-hint" @click="toggle(item.id)">
               <span class="ingredient-toggle" aria-hidden="true">{{ selectedIds.includes(item.id) ? '✓' : '+' }}</span>
               <ingredient-icon class="ingredient-art" :name="item.icon"></ingredient-icon><span class="ingredient-name">{{ item.name }}</span>
-              <span v-if="!item.recipeCount" class="unavailable-note">Nessuna ricetta</span>
+              <span v-if="!availableIngredientIds.has(item.id)" class="unavailable-note">{{ item.recipeCount ? 'Non compatibile' : 'Nessuna ricetta' }}</span>
             </button>
           </div>
           <div v-if="!shownIngredients.length" class="search-empty"><span aria-hidden="true">⌕</span><p>Nessun ingrediente trovato.</p><button type="button" class="text-button" @click="query = ''; category = 'all'">Mostra tutti gli ingredienti</button></div>
@@ -89,7 +89,7 @@
       </div>
       <section class="closing-note flex items-center justify-center gap-3"><span aria-hidden="true">✳</span><p>Il gusto giusto? <strong>È il tuo.</strong></p><span aria-hidden="true">✳</span></section>
     </main>
-    <footer class="page-width site-footer flex flex-wrap items-center justify-between gap-3"><span class="footer-brand">pizzamood.</span><p>Fatto per chi alla pizza non dice mai di no.</p><span class="footer-note">BUON MOOD, BUONA PIZZA.</span></footer>
+    <footer class="page-width site-footer flex flex-wrap items-center justify-between gap-3"><span class="footer-brand">pizzamood.</span><p>Fatto per chi alla pizza non dice mai di no.</p><span class="footer-signature"><span class="footer-note">BUON MOOD, BUONA PIZZA.</span><span class="footer-credit">Creato da Emilie Rollandin</span></span></footer>
     <a v-if="selectedIds.length" href="#results" class="mobile-results lg:hidden">{{ matchingPizzas.length }} {{ matchingPizzas.length === 1 ? 'pizza per te' : 'pizze per te' }} <span aria-hidden="true">↓</span></a>
   </div>
 </body>

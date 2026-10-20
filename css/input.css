@@ -92,7 +92,7 @@
   .selected .ingredient-toggle { background: #526c40; border-color: #526c40; color: #fff; font-size: 11px; }
   .ingredient-art { width: 48px; height: 48px; margin-bottom: 6px; }
   .ingredient-name { display: block; font-size: 11px; font-weight: 600; line-height: 1.25; text-align: center; }
-  .ingredient-tile:disabled { background: #efeee8; border-style: dashed; color: #777468; }
+  .ingredient-tile:disabled { background: #efeee8; border-style: dashed; color: #777468; cursor: not-allowed; }
   .ingredient-tile:disabled svg { opacity: .45; }
   .ingredient-tile:disabled .ingredient-toggle { display: none; }
   .unavailable-note { font-size: 9px; margin-top: 4px; }
@@ -147,6 +147,8 @@
   .site-footer { padding-block: 23px 30px; border-top: 1px solid #deddd0; font-size: 10px; color: #736d60; }
   .footer-brand { font: 800 20px var(--font-display); color: #5e6248; letter-spacing: -.8px; }
   .footer-note { font-size: 8px; letter-spacing: 1px; }
+  .footer-signature { display: inline-flex; flex-wrap: wrap; align-items: center; justify-content: flex-end; gap: 6px 12px; }
+  .footer-credit { font-size: 10px; }
   .mobile-results { position: fixed; bottom: 16px; left: 50%; transform: translateX(-50%); z-index: 10; background: #354b32; color: #fff; padding: 13px 24px; font-size: 13px; font-weight: 700; border-radius: 999px; box-shadow: 0 5px 22px #29362240; white-space: nowrap; }
   .mobile-results span { margin-left: 20px; }
   .skip-link { position: fixed; top: -100px; left: 20px; z-index: 30; background: #354b32; color: white; padding: 12px; border-radius: 8px; }
@@ -225,7 +227,7 @@
   .closing-note p { font-size: 21px; }
   .site-footer { justify-content: center; text-align: center; padding-top: 19px; gap: 10px; }
   .site-footer p { width: 100%; order: 2; }
-  .footer-note { margin-left: auto; }
+  .footer-signature { margin-left: auto; max-width: 100%; }
 }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }

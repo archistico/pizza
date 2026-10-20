@@ -1,5 +1,5 @@
 import { categories, ingredients, ingredientMap, pizzas, popularIds } from './data.js';
-import { filterPizzas, filterIngredients, toggleIngredient } from './filters.js';
+import { filterPizzas, filterIngredients, toggleIngredient, getAvailableIngredientIds } from './filters.js';
 import { loadVue } from './vue-loader.js';
 
 const IngredientIcon = {
@@ -39,6 +39,7 @@ const boot = () => {
       category: 'all', expanded: false, resultLimit: 6, suggestedId: null, pizzas }),
     computed: {
       selectedIngredients() { return this.selectedIds.map(id => ingredientMap[id]); },
+      availableIngredientIds() { return getAvailableIngredientIds(this.matchingPizzas, this.selectedIds); },
       matchingPizzas() {
         const matches = filterPizzas(pizzas, this.selectedIds);
         const featured = ['Margherita', 'Diavola', 'Boscaiola', 'Ortolana', 'Bufala', 'Quattro formaggi'];
@@ -66,7 +67,7 @@ const boot = () => {
     },
     methods: {
       toggle(id) {
-        if (!ingredientMap[id]?.recipeCount) return;
+        if (!ingredientMap[id] || !this.availableIngredientIds.has(id)) return;
         this.selectedIds = toggleIngredient(this.selectedIds, id);
         this.resultLimit = 6;
         this.suggestedId = null;
